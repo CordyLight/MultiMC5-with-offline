@@ -1,0 +1,24 @@
+name: lin64
+
+on: [push, pull_request]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: CMake
+      run: cmake -DCMAKE_INSTALL_PREFIX=./install .
+
+    - name: Build
+      run: mkdir install && make -j8 install
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: lin64
+        path: install/
